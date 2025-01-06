@@ -1,0 +1,176 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 0;
+    margin: 0;
+    padding: 0;
+    background: rgb(255, 255, 255);
+    border-radius: 0px;
+    z-index: 0;
+    position: relative;
+}
+
+.next-logo {
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0.5;
+    z-index: -1;
+    width: 30%
+}
+
+img {
+    float: right;
+    max-width: 100px;
+    height: auto;
+}
+a {
+    color: blue;
+    text-decoration: underline;
+    pointer-events: auto;
+}
+a:hover {
+    text-decoration: none;
+}
+
+.header .container {
+    background: none;
+}
+
+.form-inline {
+    margin-bottom: 40px;
+}
+
+.inter-group-text {
+    min-width: 100px;
+    text-align: left;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+h1 {
+    margin-bottom: 2rem;
+    max-width: 1140px;
+    margin: auto;
+    padding-bottom: 16px;
+    position: relative;
+    color: white;
+}
+
+/*.input-group-text, .form-control {
+    text-align: left;
+} */
+ 
+.card-body {
+    margin: 0;
+    text-align: left;
+    padding: 10px;
+    line-height: 1.2;
+    font-size: 20px;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+}
+  
+.posts:after {
+    background: linear-gradient(to right, #ffd900, #ff8800,#ff1f1fe5);
+    position: absolute;
+    content: '';
+    height: 4px;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+
+.card {
+    border: none;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    display: inline-block;
+    text-align: left;
+    border-radius: 5px;
+    margin: 0px;
+    position: absolute;
+    left: 8%;
+
+}
+
+.github {
+    max-width: 80px;
+    opacity: 0.5;
+}
+
+.github:hover {
+    opacity: 1;
+}
+
+h5 {
+    font-size: 14px;
+    float: left;
+    margin: 0;
+}
+
+h6 {
+    font-size: 14px;
+    color: black;
+    float: right;
+}
+
+p {
+    font-size: 14px;
+    color: #646464;
+    margin-top: 1rem !important;
+}
+
+
+/* welcome to 맛플레이스 */
+h1 a {
+    color: #001860;
+    font-size: 30px;
+    font-family: 'Pretendard-SemiBold', sans-serif;
+}
+
+.header {
+    margin: 0;
+    top: 0;
+    position: absolute; /* 고정 위치 설정 */
+    /* background: rgba(255, 255, 255, 0.8); /* 배경색을 약간 투명하게 설정 */
+
+}
+
+
+@font-face {
+    font-family: 'Pretendard-SemiBold';
+    src: url('fonts/pretendard-semibold.ttf') format('truetype'); /* 폰트 파일 경로 */
+    font-weight: normal;
+    font-style: normal;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 900px;
+        padding: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 a {
+        font-size: 40px;
+    }
+}
+
+.form-row {
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    margin-bottom: 10px;
+    left: 50%
+}

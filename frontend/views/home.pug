@@ -1,0 +1,106 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Kubernetes team4
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    link(rel='stylesheet', href='css/style.css')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Consolas')
+    script(type='text/javascript', src='//dapi.kakao.com/v2/maps/sdk.js?appkey=43e52cb236ac57e513a7e3affbdd179f&libraries=services,clusterer,drawing')
+    style.
+      /* 스타일 조정 */
+      #menu_wrap {
+        position: relative;
+        text-align: center; /* 텍스트 및 버튼 중앙 정렬 */
+        margin: 0;
+        top: 0px;
+        left: 0px;
+        z-index: 10;
+        background-color: rgb(255, 255, 255);
+        padding: 5px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      }
+      #form_wrap {
+        position: relative;
+        text-align: center; /* 텍스트 및 버튼 중앙 정렬 */
+        margin: 0;
+        top: 30px;
+        left: 120px;
+        z-index: 10;
+        background-color: rgb(255, 255, 255, 0);
+        padding: 5px;
+        border-radius: 5px;
+      }
+      .title-box {
+        background-color:rgb(255, 189, 113); /* 박스 배경색 */
+        padding: 80px;            /* 박스 내부 여백 */
+        border-radius: 0px;       /* 모서리 둥글게 */
+        border: 0px solid #ccc;   /* 테두리 추가 */
+        margin-bottom: 0px;      /* 아래 여백 */
+        max-width: 1140px;
+        margin: 0 auto;
+
+      }
+
+  body(style="background-color: rgb(254, 241, 214); ")
+          .title-box
+            h1.title-main(style="font-size: 20px; color:rgb(16, 0, 73); font-weight: bold; text-align: center;")
+              a(href='/')
+              br 
+              | 1등 맛집 추천 커뮤니티
+            h2.title-welcome(style="font-size: 30px; color: rgb(255, 255, 255); font-weight: bold; text-align: center; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);")
+              | Welcome to 맛플레이스👩‍🍳
+            p.title-search(style="font-size: 15px; color: rgb(61, 61, 61); font-weight: bold; text-align: center;")
+              | 당신이 찾던 취향저격 지역 인기 맛집         
+            form(onsubmit='searchPlaces(); return false;' style="text-align: center; margin-top: 10px; ")
+              input(type='text', value='', id='keyword', size='30', placeholder='지역명, 식당명을 입력하세요', style="padding-top: 6px; padding-bottom: 6px;")
+              button(type='submit' class='btn-enter' style="font-size: 12px; background-color: rgb(255, 72, 0); color: white; padding: 10px 10px; border: none; cursor: pointer;") ENTER
+            p.title-search(style="font-size: 15px; color: rgb(61, 61, 61); font-weight: normal; text-align: center; white-space: pre;")
+              | 
+              a(href='https://place.doeat.io/search/%EA%B0%80%EC%82%B0%EB%94%94%EC%A7%80%ED%84%B8%EB%8B%A8%EC%A7%80%EC%97%AD') 가산 맛집 
+              |
+              a(href='https://sikdorakuniv.imweb.me/34/?idx=29458790&bmode=view')          강남 맛집      
+              |
+              a(href='https://map.naver.com/p/search/%EC%86%90%EB%A7%8C%EB%91%90?c=12.82,0,0,0,dh')       손준현손만두         
+              | 
+              a(href='https://map.naver.com/p/search/%EA%B3%B0%ED%83%95/place/32116638?c=17.27,0,0,0,dh&placePath=%3Fentry%253Dbmp')   김웅곰탕
+
+          .container.posts.mt-0
+            include map.pug
+          .container.posts.mt-0
+            include new.pug
+            include list.pug
+
+
+//  body(style="background-color: rgb(254, 241, 214); ")
+    .container
+          .title-box
+            h1.title-main(style="font-size: 20px; color:rgb(16, 0, 73); font-weight: bold; text-align: center;")
+              a(href='/')
+              br 
+              | 1등 맛집 추천 커뮤니티
+            h2.title-welcome(style="font-size: 30px; color: rgb(255, 255, 255); font-weight: bold; text-align: center; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);")
+              | Welcome to 맛플레이스👩‍🍳
+            p.title-search(style="font-size: 15px; color: rgb(61, 61, 61); font-weight: bold; text-align: center;")
+              | 당신이 찾던 취향저격 지역 인기 맛집         
+            form(onsubmit='searchPlaces(); return false;' style="text-align: center; margin-top: 10px; ")
+              input(type='text', value='', id='keyword', size='30', placeholder='지역명, 식당명을 입력하세요', style="padding-top: 6px; padding-bottom: 6px;")
+              button(type='submit' class='btn-enter' style="font-size: 12px; background-color: rgb(255, 72, 0); color: white; padding: 10px 10px; border: none; cursor: pointer;") ENTER
+            p.title-search(style="font-size: 15px; color: rgb(61, 61, 61); font-weight: normal; text-align: center; white-space: pre;")
+              | 가산 맛집           강남 맛집           손준현손만두         김웅곰탕
+
+            //.option
+                div
+                form(onsubmit='searchPlaces(); return false;')
+                    | 검색해 보세요 !
+                    input(type='text', value='', id='keyword', size='15')
+                    button(type='submit') ENTER
+                a(href='https://app.catchtable.co.kr/').text-muted CATCHTABLE
+          .container.posts.mt-0
+            hr
+            include map.pug
+          .container.posts.mt-0
+            include new.pug
+            include list.pug

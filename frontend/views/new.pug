@@ -1,0 +1,42 @@
+#form_wrap
+    form.form-inline(action="/post", method="POST")
+        .form-row
+            .col
+                label.sr-only(for="name") 이름
+                .input-group.mb-2
+                    .input-group-prepend
+                        .input-group-text 이름
+                    input#name.form-control(type="text", name="name", required="")
+            .col
+                label.sr-only(for="message") 카테고리
+                .input-group.mb-2
+                    .input-group-prepend
+                        .input-group-text 카테고리
+                    input#message.form-control(type="text", name="message", required="")
+            .col
+                label.sr-only(for="date") 방문 날짜
+                .input-group.mb-2
+                    .input-group-prepend
+                        .input-group-text 방문 날짜
+                    input#date.form-control(type="date", name="date", required="")
+        .form-row
+            .col
+                label.sr-only(for="rating") 평점
+                .input-group.mb-2
+                    .input-group-prepend
+                        .input-group-text 평점
+                    input#rating.form-control(type="text", name="rating", required="")
+            .col
+                label.sr-only(for="ask") 한줄평
+                .input-group.mb-2
+                    .input-group-prepend
+                        .input-group-text 한줄평
+                    input#ask.form-control(type="text", name="ask", required="")
+            .col
+                label.sr-only(for="image") 이미지
+                .input-group.mb-2
+                    .input-group-prepend
+                        .input-group-text 이미지
+                    input#image.form-control(type="text", name="image", required="")
+            
+            button.btn.btn-primary.mb-2(type="submit") 저장
