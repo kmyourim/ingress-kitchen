@@ -1,0 +1,44 @@
+name: Build and Push to ECR
+
+on:
+  push:
+    branches:
+      - main # main 브랜치에 변경사항이 있을 때 실행
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 코드 체크아웃
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. AWS CLI 환경 설정
+      - name: Configure AWS CLI
+        run: |
+          aws configure set region ${{ secrets.AWS_REGION }}
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # 3. AWS ECR 로그인
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # 4. Docker 이미지 빌드 및 푸시
+      - name: Build and Push Docker Image to ECR
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
+        run: |
+          # ECR URI 생성
+          AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+          IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY"
+          # 이미지 태그 생성 (커밋 SHA를 태그로 사용)
+          IMAGE_TAG=$(echo $GITHUB_SHA | head -c 7)
+          # Docker 이미지 빌드
+          docker build -t $IMAGE_URI:$IMAGE_TAG .
+          # Docker 이미지 푸시
+          docker push $IMAGE_URI:$IMAGE_TAG
+          # GitHub 환경 변수에 이미지 URI 저장
+          echo "IMAGE_URI=$IMAGE_URI:$IMAGE_TAG" >> $GITHUB_ENV
