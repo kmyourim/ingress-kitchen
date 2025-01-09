@@ -1,0 +1,87 @@
+name: Build, Push to ECR and Update Kustomize
+
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+  
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 코드 체크아웃
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. AWS CLI 환경 설정
+      - name: Configure AWS CLI
+        run: |
+          aws configure set region ${{ secrets.AWS_REGION }}
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # 3. AWS ECR 로그인
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # 4. Docker 이미지 빌드 및 푸시
+      - name: Build and Push Docker Image to ECR
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
+        run: |
+          AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+          IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY"
+          IMAGE_TAG=$(echo $GITHUB_SHA | head -c 7)
+
+          # Docker 이미지 빌드
+          docker build -t $IMAGE_URI:$IMAGE_TAG -f frontend/Dockerfile frontend/
+
+          # Docker 이미지 푸시
+          docker push $IMAGE_URI:$IMAGE_TAG
+
+          # 이미지 URI와 태그 환경 변수 저장
+          echo "IMAGE_URI=$IMAGE_URI:$IMAGE_TAG" >> $GITHUB_ENV
+          echo "Built and pushed image: $IMAGE_URI:$IMAGE_TAG"
+
+      # 5. Kustomize 리포지토리 체크아웃
+      - name: Checkout Kustomize Repo
+        uses: actions/checkout@v3
+        with:
+          repository: kmyourim/ingress-kitchen-kustomize
+          token: ${{ secrets.PAT_TOKEN }}
+          ref: main
+
+      # 6. Kustomize 파일 업데이트
+      - name: Update Kustomize File
+        run: |
+          # image 항목 업데이트 (태그 포함)
+          sed -i "s|image:.*|image: ${IMAGE_URI}|g" kustomize/frontdeploy.yaml
+          
+          # newTag 항목 업데이트 (필요한 경우)
+          sed -i "s|newTag:.*|newTag: $(echo ${IMAGE_URI} | awk -F: '{print $2}')|g" kustomize/frontdeploy.yaml
+
+          # 업데이트된 파일 내용 확인
+          cat kustomize/frontdeploy.yaml
+
+      # 7. Git 변경 사항 커밋 및 푸시
+      - name: Commit and Push Changes
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          # Git 사용자 설정
+          git config --global user.name "kmyourim"
+          git config --global user.email "dbfla704@gmail.com"
+
+          # 변경 사항 커밋 및 푸시
+          git add kustomize/frontdeploy.yaml
+          git commit -m "Update Kustomize with new image: $IMAGE_URI" || echo "[No changes] Nothing to commit."
+          
+          # 디버깅 로그 활성화
+          set -x
+          git push https://x-access-token:${PAT_TOKEN}@github.com/kmyourim/ingress-kitchen-kustomize.git main
+          set +x
