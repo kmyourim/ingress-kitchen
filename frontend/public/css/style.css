@@ -82,7 +82,7 @@ h1 {
 }
 
 .posts:after {
-    background: linear-gradient(to right, #ffd900, #ff8800,#ff1f1fe5);
+    background: linear-gradient(to right, #ffd900, #a9ea6c,#0d9700e5);
     position: absolute;
     content: '';
     height: 4px;
