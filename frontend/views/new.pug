@@ -21,11 +21,24 @@
                     input#date.form-control(type="date", name="date", required="")
         .form-row
             .col
+                label.sr-only(for="address") 주소
+                .input-group.mb-2
+                    .input-group-prepend
+                        .input-group-text 주소
+                    input#address.form-control(type="text", name="address", required="")
+            .col
+                label.sr-only(for="tel") 전화번호
+                .input-group.mb-2
+                    .input-group-prepend
+                        .input-group-text 전화번호
+                    input#tel.form-control(type="text", name="tel", required="")
+            .col
                 label.sr-only(for="rating") 평점
                 .input-group.mb-2
                     .input-group-prepend
                         .input-group-text 평점
                     input#rating.form-control(type="text", name="rating", required="")
+        .form-row
             .col
                 label.sr-only(for="ask") 한줄평
                 .input-group.mb-2
@@ -33,10 +46,16 @@
                         .input-group-text 한줄평
                     input#ask.form-control(type="text", name="ask", required="")
             .col
+                label.sr-only(for="link") 링크
+                .input-group.mb-2
+                    .input-group-prepend
+                        .input-group-text 링크
+                    input#link.form-control(type="text", name="link", required="")
+            .col
                 label.sr-only(for="image") 이미지
                 .input-group.mb-2
                     .input-group-prepend
                         .input-group-text 이미지
                     input#image.form-control(type="text", name="image", required="")
-            
+
             button.btn.btn-primary.mb-2(type="submit") 저장
