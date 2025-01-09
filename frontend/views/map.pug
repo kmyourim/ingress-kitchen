@@ -18,6 +18,8 @@ script.
     var map = new kakao.maps.Map(mapContainer, mapOption);
     var ps = new kakao.maps.services.Places();
     var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
+    
+    searchPlaces();
 
     function searchPlaces() {
         var keyword = document.getElementById('keyword').value;
